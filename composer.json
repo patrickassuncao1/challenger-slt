@@ -1,0 +1,17 @@
+{
+    "name": "patrickassuncao/challenger",
+    "description": "challenger solasstec ",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "config": {
+        "vendor-dir": "vendor"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "league/plates": "^3.5"
+    }
+}
