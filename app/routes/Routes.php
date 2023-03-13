@@ -1,6 +1,8 @@
 <?php
 
 return [
-    "GET" => [],
+    "GET" => [
+        "/" => fn () => self::load("HomeController", "index")
+    ],
     "POST" => []
 ];
