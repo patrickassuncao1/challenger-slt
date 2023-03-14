@@ -45,7 +45,7 @@ class Database
         }
     }
 
-    public function insert(array $values) : int
+    public function insert(array $values): int
     {
         $fields = array_keys($values);
         $binds = array_pad([], count($fields), '?');
@@ -58,5 +58,17 @@ class Database
         $this->execute($query, array_values($values));
 
         return $this->connection->lastInsertId();
+    }
+
+    public function select($where = null, $order = null, $limit = null, $fields = '*')
+    {
+
+        $where = strlen($where) ? "WHERE {$where}" : "";
+        $order = strlen($order) ? "ORDER BY  {$order} DESC" : '';
+        $limit = strlen($limit) ? "LIMIT  {$limit}" : '';
+
+        $query = "SELECT {$fields} FROM  {$this->table} {$where} {$order} {$limit}";
+        
+        return $this->execute($query);
     }
 }
