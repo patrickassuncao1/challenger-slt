@@ -11,13 +11,18 @@ class FlashMessage
         }
     }
 
-    public static function getFlash(string $index)
+    public static function getFlash(string $index, $isError = false)
     {
         if (isset($_SESSION['flash'][$index])) {
             $flash = $_SESSION['flash'][$index];
             unset($_SESSION['flash'][$index]);
 
-            return $flash;
+            $classes = $isError ? "text-red-800" : "text-green-800";
+
+            return "<div class='text-sm {$classes}'>
+            <span class='font-medium'>
+                {$flash}
+            </div>";
         }
     }
 }
