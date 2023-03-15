@@ -14,4 +14,5 @@ class Redirect
         FlashMessage::setFlash($index, $message);
         return  self::redirect($redirectTo);
     }
+
 }

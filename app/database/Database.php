@@ -68,8 +68,23 @@ class Database
         $order = strlen($order) ? "ORDER BY  {$order} DESC" : '';
         $limit = strlen($limit) ? "LIMIT  {$limit}" : '';
 
-        $query = "SELECT {$fields} FROM  {$this->table} {$where} {$order} {$limit}";    
+        $query = "SELECT {$fields} FROM  {$this->table} {$where} {$order} {$limit}";
+        
+        return $this->execute($query);
+    }
 
+
+    public function count($where = null)
+    {
+        $where = strlen($where) ? "WHERE {$where}" : "";
+
+        $query = "SELECT COUNT(*) FROM {$this->table} {$where}";
+
+        return $this->execute($query);
+    }
+
+    public function dbRaw($query)
+    {
         return $this->execute($query);
     }
 }

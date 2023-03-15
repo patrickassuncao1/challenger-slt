@@ -43,7 +43,7 @@
                                 <?php echo date('d/m/Y', strtotime($document->created_at)); ?>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Tramitações</a>
+                                <a href="/documento-tramitacoes/<?php echo $document->id; ?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Tramitações</a>
                             </td>
                         </tr>
                     <?php endforeach ?>

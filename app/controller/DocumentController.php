@@ -7,11 +7,12 @@ use App\helpers\Redirect;
 use App\helpers\Validate;
 use App\models\Document;
 use App\models\DocumentType;
+use App\models\Sector;
 
 class DocumentController extends Controller
 {
 
-    public function index() 
+    public function index()
     {
         $documents = Document::getAll();
 
@@ -41,7 +42,7 @@ class DocumentController extends Controller
         }
 
         $random_name = md5(uniqid(rand(), true));
-        $pathPdf = "/resources/storage/". $random_name . '.pdf';
+        $pathPdf = "/resources/storage/" . $random_name . '.pdf';
         $destination =  dirname(__FILE__, 3) . $pathPdf;
 
         if (!move_uploaded_file($_FILES['file']['tmp_name'], $destination)) {
@@ -59,8 +60,30 @@ class DocumentController extends Controller
         $document->path_pdf = $pathPdf;
 
         $document->create();
-        
+
 
         return Redirect::redirect("/");
+    }
+
+
+    public function getDocumentProcessing(object $request, object $params)
+    {
+        $id = $params->id;
+
+        if (!is_numeric($id)) {
+           return self::view('not_found', [], 404);
+        }
+
+        $countDocument = Document::count($id);
+
+        if (!$countDocument) {
+           return self::view('not_found', [], 404);
+        }
+
+        $procedures = Document::getDocumentWithProcessing($id);
+        
+        $document =  Document::findFirst($id, "id, num_document, title");
+
+        self::view('procedure', ["document" => $document, "procedures" => $procedures]);
     }
 }

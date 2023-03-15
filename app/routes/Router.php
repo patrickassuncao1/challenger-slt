@@ -25,7 +25,7 @@ class Router
 
             $controllerInstance = new $controllerNamespace();
 
-            $controllerInstance->$method((object) $_REQUEST, $params);
+            $controllerInstance->$method((object) $_REQUEST, (object) $params);
         } catch (\Throwable $th) {
             echo $th->getMessage();
         }
