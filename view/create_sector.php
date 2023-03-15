@@ -15,14 +15,9 @@ $message = FlashMessage::getFlash("message");
         </h1>
         <div class="max-w-2xl">
             <?php
-            if ($message) {
-                echo 
-                "<div 
-                    class='p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100' role='alert'>
-                    <span class='font-medium'>
-                        {$message}
-                 </div>";
-            };
+                if ($message) {
+                    echo $message;
+                };
 
             ?>
             <form action="/setor/store" method="post" class="w-full">

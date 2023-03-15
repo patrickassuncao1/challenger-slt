@@ -25,6 +25,7 @@ class Database
 
         try {
             $this->connection = new PDO("mysql:host=" . $HOST . ";dbname=" . $NAME, $USER, $PASSWORD);
+            $this->connection->exec('SET NAMES utf8');
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
             die("Error " . $e->getMessage());
@@ -67,8 +68,8 @@ class Database
         $order = strlen($order) ? "ORDER BY  {$order} DESC" : '';
         $limit = strlen($limit) ? "LIMIT  {$limit}" : '';
 
-        $query = "SELECT {$fields} FROM  {$this->table} {$where} {$order} {$limit}";
-        
+        $query = "SELECT {$fields} FROM  {$this->table} {$where} {$order} {$limit}";    
+
         return $this->execute($query);
     }
 }

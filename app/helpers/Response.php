@@ -35,7 +35,6 @@ class Response
     private function sendHeaders()
     {
         http_response_code($this->httpCode);
-
         foreach ($this->headers as $key => $value) {
             header($key . ': ' . $value);
         }

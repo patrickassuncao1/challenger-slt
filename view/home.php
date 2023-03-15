@@ -7,9 +7,9 @@
             Gerenciador de documentos
         </h1>
         <div className="w-full mb-4">
-            <button type="button" class="relative inline-block shrink-0 rounded-md bg-blue-700 px-12 py-3 text-sm font-medium text-white transition hover:bg-blue-400  focus:outline-none focus:ring">
+            <a href="/criar-documento" class="relative inline-block shrink-0 rounded-md bg-blue-700 px-12 py-3 text-sm font-medium text-white transition hover:bg-blue-400  focus:outline-none focus:ring">
                 Novo documento
-            </button>
+            </a>
         </div>
 
         <div class="relative mt-6 overflow-x-auto shadow-md sm:rounded-lg bg-gray-200">
@@ -22,49 +22,31 @@
                         <th scope="col" class="px-6 py-3">
                             Título
                         </th>
-                        <th scope="col" class="px-6 py-3">
-                            Setor de Envio
+                        <th>
+                            Criado em:
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Data/hora Envio
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Setor Recebeu
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Data/hora Recebeu
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            <span class="sr-only">Edit</span>
+                            <span class="sr-only"></span>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white border-b  hover:bg-gray-50 ">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            Apple MacBook Pro 17"
-                        </th>
-                        <td class="px-6 py-4">
-                            Silver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Enviar</a>
-                            <span class="mx-2">/</span>
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Receber</a>
-                        </td>
-                    </tr>
+                    <?php foreach ($documents as $document) : ?>
+                        <tr class="bg-white border-b  hover:bg-gray-50 ">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                <?php echo $document->num_document ?>
+                            </th>
+                            <td class="px-6 py-4">
+                                <?php echo $document->title ?>
+                            </td>
+                            <td class="px-6 py-4">
+                                <?php echo date('d/m/Y', strtotime($document->created_at)); ?>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Tramitações</a>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>
