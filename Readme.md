@@ -16,6 +16,8 @@ DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
 
+```
+
 - scripts sql em ./script.sql
 
 
