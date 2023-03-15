@@ -4,10 +4,10 @@ namespace App\controller;
 
 use App\helpers\FlashMessage;
 use App\helpers\Redirect;
+use App\helpers\Response;
 use App\helpers\Validate;
 use App\models\Document;
 use App\models\DocumentType;
-use App\models\Sector;
 
 class DocumentController extends Controller
 {
@@ -71,19 +71,60 @@ class DocumentController extends Controller
         $id = $params->id;
 
         if (!is_numeric($id)) {
-           return self::view('not_found', [], 404);
+            return self::view('not_found', [], 404);
         }
 
         $countDocument = Document::count($id);
 
         if (!$countDocument) {
-           return self::view('not_found', [], 404);
+            return self::view('not_found', [], 404);
         }
 
         $procedures = Document::getDocumentWithProcessing($id);
-        
+
         $document =  Document::findFirst($id, "id, num_document, title");
 
         self::view('procedure', ["document" => $document, "procedures" => $procedures]);
+    }
+
+    public function show(object $request, object $params)
+    {
+        $documentId = $params->documentId;
+
+        if (!is_numeric($documentId)) {
+            return self::view('not_found', [], 404);
+        }
+
+        $document = Document::documentWithType($documentId);
+
+        if (!$document) {
+            return self::view('not_found', [], 404);
+        }
+
+        self::view("view_document",  ["document" => $document]);
+    }
+
+    public function viewPDF(object $request, object $params)
+    {
+        $documentId = $params->documentId;
+
+        if (!is_numeric($documentId)) {
+            return self::view('not_found', [], 404);
+        }
+
+        $document = Document::findFirst($documentId, "path_pdf");
+
+        if (!$document) {
+            return self::view('not_found', [], 404);
+        }
+
+        $path = dirname(__FILE__, 3). "{$document['path_pdf']}";
+        
+        $base = base64_encode(file_get_contents($path, false));
+
+
+        return new Response(200, base64_decode($base), "application/pdf");
+        
+        
     }
 }

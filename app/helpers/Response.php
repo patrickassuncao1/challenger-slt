@@ -46,6 +46,7 @@ class Response
 
         switch ($this->contentType) {
             case 'text/html':
+            case  'application/pdf':
                 echo $this->content;
                 exit;
             case 'application/json';

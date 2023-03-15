@@ -36,7 +36,7 @@ class Document
         $database->insert([
             "document_id" => $document_id
         ]);
-        
+
         return $document_id;
     }
 
@@ -70,15 +70,15 @@ class Document
                     docp.datetime_received
         
                 FROM
-                    documents doc
+                    $tableModel doc
                 INNER JOIN document_processing docp ON (doc.id = docp.document_id)
                 LEFT JOIN sector s1 ON (docp.sector_send_id = s1.id)
                 LEFT JOIN sector s2 ON (docp.sector_receive_id = s2.id) 
-                WHERE doc.id = 3 ORDER BY docp.id;";
+                WHERE doc.id = $documentId ORDER BY docp.id;";
 
         $database = new Database();
 
-        return $database->dbRaw($query)->fetchAll(PDO::FETCH_CLASS, DocumentRelationsDto::class);;
+        return $database->dbRaw($query)->fetchAll(PDO::FETCH_CLASS, DocumentRelationsDto::class);
     }
 
 
@@ -88,5 +88,25 @@ class Document
 
         return $database->select("id = $documentId", null, null,  $columns)
             ->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function documentWithType($documentId)
+    {
+        $database = new Database(self::TABLE_NAME);
+
+        $query = "SELECT
+                    doc.id,
+                    doc.num_document,
+                    doc.title,
+                    doc.desc_document,
+                    doc.path_pdf,
+                    doc.created_at,
+                    dt.desc_document_type
+                FROM
+                    documents doc
+                    INNER JOIN document_type dt ON (doc.type_document_Id = dt.id)
+                WHERE doc.id = $documentId ;";
+
+        return $database->dbRaw($query)->fetch(PDO::FETCH_ASSOC );
     }
 }

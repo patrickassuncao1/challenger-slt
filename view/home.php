@@ -1,6 +1,6 @@
 <?php $this->layout('master') ?>
 
-<section class="container block mx-auto mt-8">
+<section class="container block mx-auto mt-8 mb-20">
 
     <div class="px-2 sm:px-4">
         <h1 class="text-3xl my-4 font-extrabold tracking-tight leading-none text-gray-900 md:text-4xl">
